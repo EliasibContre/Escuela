@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CursoMapper implements  CommonMapper<CursoRequest, CursoResponse, Curso>{
     @Override
-    public Curso requesAEntidad(CursoRequest request) {
+    public Curso requestAEntidad(CursoRequest request) {
        if (request== null)return null;
        return Curso.builder()
                .nombre(request.nombre().trim())

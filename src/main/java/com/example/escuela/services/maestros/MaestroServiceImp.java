@@ -43,7 +43,7 @@ public class MaestroServiceImp implements MaestroServices {
     public MaestroResponse registrar(MaestroRequest request) {
         log.info("nuevo maestro");
         validarDatosUnicos(request);
-        Maestro maestro = maestroMapper.requesAEntidad(request);
+        Maestro maestro = maestroMapper.requestAEntidad(request);
         maestroRepository.save(maestro);
         log.info("nuevo maestro: {} registrado", maestro.getNombre());
         return maestroMapper.entidadAResponse(maestro);
