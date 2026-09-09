@@ -1,12 +1,23 @@
 package com.example.escuela.utils;
 
 import com.example.escuela.enums.DiaSemana;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class StringCustomUtils {
+
+    private static final DateTimeFormatter formato= DateTimeFormatter.ofPattern("dd/MM/yyyy");
     public static void validarNoVacio(String texto, String mensaje) {
         if(texto == null || texto.isBlank())
             throw new IllegalArgumentException(mensaje);
+    }
+
+    public static String localeDateAString(LocalDate fecha)
+    {
+        return fecha==null ?null:fecha.format(formato);
     }
 
     public static void validarTamanio(String texto, Integer min, Integer max, String mensaje) {
