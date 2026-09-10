@@ -10,7 +10,7 @@ public record CursoResponse(
     String nombre,
         @Schema(description = "descripcion del curso", example = "aqui pertenece tal y se vera tal cosa")
     String descripcion,
-        @Schema(description = "maxima o minima del curso", example = "5")
+        @Schema(description = "cantidad de creditos del curso", example = "5")
     Integer creditos
 
 ) { }

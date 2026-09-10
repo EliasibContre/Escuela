@@ -97,5 +97,19 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(EntidadRelacionException.class)
+    public ResponseEntity<CustomErrorResponse> handleEntidadRelacionException(
+            EntidadRelacionException e) {
+
+        log.warn("Conflicto de relación: {}", e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new CustomErrorResponse(
+                        HttpStatus.CONFLICT.value(),
+                        e.getMessage()
+                ));
+    }
+
+
 }
 
