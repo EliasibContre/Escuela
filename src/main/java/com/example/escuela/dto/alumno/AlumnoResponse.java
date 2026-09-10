@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-@Schema(description = "informacion de una sucursal")
+@Schema(description = "informacion de un alummno")
 public record AlumnoResponse(
         @Schema(description = "id de ejemp.o", example = "1")
         Long id,
