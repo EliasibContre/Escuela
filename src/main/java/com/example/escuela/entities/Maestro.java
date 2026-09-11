@@ -56,4 +56,5 @@ public class Maestro {
         this.email = email.trim();
         this.telefono = telefono.trim();
     }
+
 }

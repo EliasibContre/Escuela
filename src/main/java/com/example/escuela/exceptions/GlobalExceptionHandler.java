@@ -3,7 +3,7 @@ package com.example.escuela.exceptions;
 import com.example.escuela.dto.CustomErrorResponse;
 import com.example.escuela.exceptions.RecursoNoEncontradoException;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.exception.ConstraintViolationException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.dao.DataIntegrityViolationException;
+
 
 import java.util.NoSuchElementException;
 
@@ -96,6 +98,36 @@ public class GlobalExceptionHandler {
                 .body(new CustomErrorResponse(HttpStatus.BAD_REQUEST.value(),mensaje));
 
     }
+
+    @ExceptionHandler(EntidadRelacionException.class)
+    public ResponseEntity<CustomErrorResponse> handleEntidadRelacionException(
+            EntidadRelacionException e) {
+
+        log.warn("Conflicto de relación: {}", e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new CustomErrorResponse(
+                        HttpStatus.CONFLICT.value(),
+                        e.getMessage()
+                ));
+
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<CustomErrorResponse> handleDataIntegrityViolation(
+            DataIntegrityViolationException e
+    ) {
+        log.warn("Conflicto de integridad en la base de datos", e);
+
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new CustomErrorResponse(
+                        HttpStatus.CONFLICT.value(),
+                        "La operación entra en conflicto con los datos existentes"
+                ));
+    }
+
+
+
 
 }
 

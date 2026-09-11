@@ -1,7 +1,6 @@
 package com.example.escuela.enums;
 
 import com.example.escuela.utils.StringCustomUtils;
-import com.example.escuela.exceptions.RecursoNoEncontradoException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -28,7 +27,10 @@ public enum DiaSemana {
                         if(StringCustomUtils.quitarAcentos(categoria.descripcion).equalsIgnoreCase(descripcionNormalizada))
                                 return categoria;
                 }
-                throw new RecursoNoEncontradoException("NO existe una categoria" + descripcion);
+                throw new IllegalArgumentException(
+                        "Día no válido: " + descripcion
+                );
+
         }
 
 }

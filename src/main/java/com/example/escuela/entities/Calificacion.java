@@ -23,14 +23,56 @@ public class Calificacion {
     @Column(name = "ID_CALIFICACION")
     private Long id;
 
-    @Column(name = "CALIFICACION", nullable = false,length = 100,unique = true)
+    @Column(name = "CALIFICACION", nullable = false)
     private BigDecimal calificacion;
 
-
-    @Column(name = "FECHA_REGISTRO",length = 200)
+    @Builder.Default
+    @Column(name = "FECHA_REGISTRO", nullable = false)
     private LocalDate fechaRegistro =LocalDate.now();
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_INSCRIPCION", nullable = false, unique = true)
     private Inscripcion inscripcion;
+
+    private static void validarDatos(
+            Inscripcion inscripcion,
+            BigDecimal calificacion
+    ) {
+        if (inscripcion == null) {
+            throw new IllegalArgumentException(
+                    "La inscripción es obligatoria"
+            );
+        }
+
+        if (calificacion == null) {
+            throw new IllegalArgumentException(
+                    "La calificación es obligatoria"
+            );
+        }
+    }
+
+    public static Calificacion crear(
+            Inscripcion inscripcion,
+            BigDecimal calificacion
+    ) {
+        validarDatos(inscripcion, calificacion);
+
+        Calificacion nueva = new Calificacion();
+        nueva.inscripcion = inscripcion;
+        nueva.calificacion = calificacion;
+        nueva.fechaRegistro = LocalDate.now();
+
+        return nueva;
+    }
+
+    public void actualizar(
+            Inscripcion inscripcion,
+            BigDecimal calificacion
+    ) {
+        validarDatos(inscripcion, calificacion);
+
+        this.inscripcion = inscripcion;
+        this.calificacion = calificacion;
+    }
+
 }
